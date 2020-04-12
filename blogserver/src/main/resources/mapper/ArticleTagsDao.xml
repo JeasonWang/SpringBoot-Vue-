@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanghuan.blogserver.dao.ArticleTagsDao">
+
+    <resultMap type="com.wanghuan.blogserver.entity.ArticleTags" id="ArticleTagsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="aid" column="aid" jdbcType="INTEGER"/>
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleTagsMap">
+        select
+          id, aid, tid
+        from vueblog.article_tags
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleTagsMap">
+        select
+          id, aid, tid
+        from vueblog.article_tags
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleTagsMap">
+        select
+          id, aid, tid
+        from vueblog.article_tags
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="aid != null">
+                and aid = #{aid}
+            </if>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into vueblog.article_tags(aid, tid)
+        values (#{aid}, #{tid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update vueblog.article_tags
+        <set>
+            <if test="aid != null">
+                aid = #{aid},
+            </if>
+            <if test="tid != null">
+                tid = #{tid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from vueblog.article_tags where id = #{id}
+    </delete>
+
+</mapper>

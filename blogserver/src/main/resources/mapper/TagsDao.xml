@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanghuan.blogserver.dao.TagsDao">
+
+    <resultMap type="com.wanghuan.blogserver.entity.Tags" id="TagsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="tagname" column="tagName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TagsMap">
+        select
+          id, tagName
+        from vueblog.tags
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TagsMap">
+        select
+          id, tagName
+        from vueblog.tags
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TagsMap">
+        select
+          id, tagName
+        from vueblog.tags
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="tagname != null and tagname != ''">
+                and tagName = #{tagname}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into vueblog.tags(tagName)
+        values (#{tagname})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update vueblog.tags
+        <set>
+            <if test="tagname != null and tagname != ''">
+                tagName = #{tagname},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from vueblog.tags where id = #{id}
+    </delete>
+
+</mapper>
