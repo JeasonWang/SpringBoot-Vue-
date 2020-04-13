@@ -2,14 +2,17 @@ package com.wanghuan.blogserver.dao;
 
 import com.wanghuan.blogserver.entity.Article;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
  * (Article)表数据库访问层
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:23
  */
+
 public interface ArticleDao {
 
     /**
@@ -62,4 +65,5 @@ public interface ArticleDao {
      */
     int deleteById(Integer id);
 
+    List<Article> queryAllByStateAndKeywords(@Param("state") int state, @Param("offset") int offset,@Param("limit") int limit, @Param("keywords") String keywords);
 }

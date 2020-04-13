@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * (Tags)实体类
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
 public class Tags implements Serializable {

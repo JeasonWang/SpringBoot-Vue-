@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * (Article)实体类
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:21
  */
 public class Article implements Serializable {

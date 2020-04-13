@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * (Category)表服务接口
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
 public interface CategoryService {
@@ -18,6 +18,14 @@ public interface CategoryService {
      * @return 实例对象
      */
     Category queryById(Integer id);
+
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param category 实例对象
+     * @return 对象列表
+     */
+    List<Category> queryAll(Category category);
 
     /**
      * 查询多条数据
@@ -34,7 +42,7 @@ public interface CategoryService {
      * @param category 实例对象
      * @return 实例对象
      */
-    Category insert(Category category);
+    int insert(Category category);
 
     /**
      * 修改数据
@@ -42,7 +50,7 @@ public interface CategoryService {
      * @param category 实例对象
      * @return 实例对象
      */
-    Category update(Category category);
+    int update(Category category);
 
     /**
      * 通过主键删除数据
@@ -50,6 +58,6 @@ public interface CategoryService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    int deleteById(Integer id);
 
 }

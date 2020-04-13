@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * (Comments)表服务接口
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
 public interface CommentsService {

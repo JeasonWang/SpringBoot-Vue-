@@ -1,12 +1,14 @@
 package com.wanghuan.blogserver.service;
 
 import com.wanghuan.blogserver.entity.Article;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
  * (Article)表服务接口
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:23
  */
 public interface ArticleService {
@@ -18,6 +20,14 @@ public interface ArticleService {
      * @return 实例对象
      */
     Article queryById(Integer id);
+
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param article 实例对象
+     * @return 对象列表
+     */
+    List<Article> queryAll(Article article);
 
     /**
      * 查询多条数据
@@ -34,7 +44,7 @@ public interface ArticleService {
      * @param article 实例对象
      * @return 实例对象
      */
-    Article insert(Article article);
+    int insert(Article article);
 
     /**
      * 修改数据
@@ -42,7 +52,7 @@ public interface ArticleService {
      * @param article 实例对象
      * @return 实例对象
      */
-    Article update(Article article);
+    int update(Article article);
 
     /**
      * 通过主键删除数据
@@ -50,6 +60,7 @@ public interface ArticleService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    int deleteById(Integer id);
 
+    List<Article> queryAllByStateAndKeywords(int state, int offset, int limit, String keywords);
 }

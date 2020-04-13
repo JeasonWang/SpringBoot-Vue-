@@ -123,4 +123,18 @@
         delete from vueblog.article where id = #{id}
     </delete>
 
+    <select id="queryAllByStateAndKeywords" resultMap="ArticleMap">
+        select
+          id, title, mdContent, htmlContent, summary, cid, uid, publishDate, editTime, state, pageView
+        from vueblog.article
+        <where>
+            <if test="state != -1">
+                state = #{state}
+            </if>
+            <if test="keywords != null">
+                title like concat('%',#{keywords},'%')
+            </if>
+            ORDER BY editTime DESC limit #{start},#{count};
+        </where>
+    </select>
 </mapper>

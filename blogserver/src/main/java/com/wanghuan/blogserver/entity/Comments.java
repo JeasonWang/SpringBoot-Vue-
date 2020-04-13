@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * (Comments)实体类
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
 public class Comments implements Serializable {

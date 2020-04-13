@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * (Tags)表数据库访问层
  *
- * @author makejava
+ * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
 public interface TagsDao {
