@@ -13,6 +13,14 @@
         <result property="regtime" column="regTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <select id="queryByUsnAndPsd" resultMap="UserMap">
+        select
+          id, username, nickname, password, enabled, email, userface, regTime
+        from vueblog.user
+        where username = #{username}
+        and password = #{password}
+    </select>
+
     <!--查询单个-->
     <select id="queryById" resultMap="UserMap">
         select
@@ -102,4 +110,8 @@
         delete from vueblog.user where id = #{id}
     </delete>
 
+    <select id="isAdmin" resultType="int">
+        select count(1) from user u,roles_user ru
+        where u.id=ru.uid and ru.rid=1 and u.id=#{id}
+    </select>
 </mapper>

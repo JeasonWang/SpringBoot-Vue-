@@ -34,7 +34,7 @@ public interface UserService {
      * @param user 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    int insert(User user);
 
     /**
      * 修改数据
@@ -42,7 +42,7 @@ public interface UserService {
      * @param user 实例对象
      * @return 实例对象
      */
-    User update(User user);
+    int update(User user);
 
     /**
      * 通过主键删除数据
@@ -50,6 +50,10 @@ public interface UserService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    int deleteById(Integer id);
+
+    User queryByUsnAndPsd(String username,String password);
+
+    int isAdmin(int id);
 
 }

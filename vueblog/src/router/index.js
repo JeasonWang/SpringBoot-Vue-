@@ -19,6 +19,11 @@ export default new Router({
       hidden: true,
       component: Login
     }, {
+      path: '/login',
+      name: '登录',
+      hidden: true,
+      component: Login
+    }, {
       path: '/home',
       name: '',
       component: Home,

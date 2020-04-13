@@ -65,5 +65,7 @@ public interface ArticleDao {
      */
     int deleteById(Integer id);
 
-    List<Article> queryAllByStateAndKeywords(@Param("state") int state, @Param("offset") int offset,@Param("limit") int limit, @Param("keywords") String keywords);
+    List<Article> queryAllByStateAndKeywords(@Param("state") int state, @Param("offset") int offset,@Param("limit") int limit, @Param("keywords") String keywords,@Param("uid")int uid);
+
+    int totalCount(@Param("state")int state,@Param("uid")int uid);
 }

@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface UserDao {
 
+    User queryByUsnAndPsd(@Param("username")String username,@Param("password")String password);
+
     /**
      * 通过ID查询单条数据
      *
@@ -62,4 +64,5 @@ public interface UserDao {
      */
     int deleteById(Integer id);
 
+    int isAdmin(@Param("id") int id);
 }

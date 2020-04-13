@@ -47,6 +47,15 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> queryAllByStateAndKeywords(int state, int page, int count, String keywords) {
         int offset = (page - 1)*count;
         int limit = count;
-        return articleDao.queryAllByStateAndKeywords(state,offset,limit,keywords);
+        int uid = 7;
+        return articleDao.queryAllByStateAndKeywords(state,offset,limit,keywords,uid);
+    }
+
+    @Override
+    public int totalCount(int state) {
+        if (state == 1){
+            System.out.println("1-7");
+        }
+        return articleDao.totalCount(state,7);
     }
 }

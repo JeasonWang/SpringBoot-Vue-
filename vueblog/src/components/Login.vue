@@ -24,6 +24,7 @@
           account: [{required: true, message: '请输入用户名', trigger: 'blur'}],
           checkPass: [{required: true, message: '请输入密码', trigger: 'blur'}]
         },
+        userToken:'',
         checked: true,
         loginForm: {
           username: 'sang',
@@ -43,12 +44,9 @@
           _this.loading = false;
           if (resp.status == 200) {
             //成功
-            var json = resp.data;
-            if (json.status == 'success') {
-              _this.$router.replace({path: '/home'});
-            } else {
-              _this.$alert('登录失败!', '失败!');
-            }
+            _this.userToken = resp.data.token;
+            _this.$store.commit('changeLogin',{ Authorization:_this.userToken })
+            _this.$router.replace({path: '/home'});
           } else {
             //失败
             _this.$alert('登录失败!', '失败!');
