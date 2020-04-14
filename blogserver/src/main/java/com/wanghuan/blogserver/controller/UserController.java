@@ -12,7 +12,7 @@ public class UserController {
     UserService userService;
     @GetMapping("/currentUserName")
     public String getCurrentUser(){
-        return userService.queryById(7).getUsername();
+        return userService.queryById(7).getNickname();
     }
     @GetMapping("/currentUserEmail")
     public String getCurrentUserEmail(){

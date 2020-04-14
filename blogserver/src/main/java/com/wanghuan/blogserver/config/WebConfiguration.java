@@ -18,13 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-    private TokenInterceptor tokenInterceptor;
-
-    //构造方法
-    public WebConfiguration(TokenInterceptor tokenInterceptor){
-        this.tokenInterceptor = tokenInterceptor;
-    }
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -50,7 +43,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/static/**");  //静态资源
         excludePath.add("/assets/**");  //静态资源
 
-        registry.addInterceptor(tokenInterceptor)
+        registry.addInterceptor(new TokenInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePath);
         WebMvcConfigurer.super.addInterceptors(registry);

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 @RestController
@@ -16,7 +19,7 @@ public class LoginController {
     @Autowired
     UserService userService;
     @PostMapping("/login")
-    public String login(String username,String password) throws JsonProcessingException {
+    public String login(String username, String password) throws JsonProcessingException {
         User user1 = userService.queryByUsnAndPsd(username,password);
         if (user1 != null){
             String token= TokenUtil.sign(user1);
