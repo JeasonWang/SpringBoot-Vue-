@@ -129,7 +129,7 @@
         from vueblog.article
         <where>
             <if test="state != -2">
-                uid = #{uid}
+                and uid = #{uid}
             </if>
             <if test="state != -1 and state !=-2">
                 and state = #{state}
@@ -137,21 +137,24 @@
             <if test="state = -2">
                 and state = 1
             </if>
+            <if test="keywords!=null">
+                AND title LIKE concat('%',#{keywords},'%')
+            </if>
             ORDER BY editTime DESC limit #{offset},#{limit};
         </where>
     </select>
 
     <select id="totalCount" resultType="int">
-        select count(*) from article
+        SELECT count(*) FROM article
         <where>
-            <if test="state != -2">
-                uid = #{uid}
+            <if test="state!=-1">
+                AND state=#{state}
             </if>
-            <if test="state != -2 and state !=-1">
-                and state = #{state}
+            <if test="uid!=null">
+                AND uid=#{uid}
             </if>
-            <if test="state = -2">
-                and state = 1
+            <if test="keywords!=null">
+                AND title LIKE concat('%',#{keywords},'%')
             </if>
         </where>
     </select>

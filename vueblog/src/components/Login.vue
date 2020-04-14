@@ -42,11 +42,12 @@
           password: this.loginForm.password
         }).then(resp=> {
           _this.loading = false;
-          if (resp.status == 200) {
+          if (resp.status == 200 && resp.data.token !="") {
             //成功
             _this.userToken = resp.data.token;
             _this.$store.commit('changeLogin',{ Authorization:_this.userToken })
             _this.$router.replace({path: '/home'});
+            _this.message("登录成功");
           } else {
             //失败
             _this.$alert('登录失败!', '失败!');

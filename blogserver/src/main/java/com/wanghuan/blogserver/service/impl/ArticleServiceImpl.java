@@ -52,10 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int totalCount(int state) {
-        if (state == 1){
-            System.out.println("1-7");
-        }
-        return articleDao.totalCount(state,7);
+    public int totalCount(Integer state, Integer uid,String keywords) {
+        return articleDao.totalCount(state, uid,keywords);
     }
 }

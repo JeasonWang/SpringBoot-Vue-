@@ -64,5 +64,5 @@ public interface ArticleService {
 
     List<Article> queryAllByStateAndKeywords(int state, int page, int count, String keywords);
 
-    int totalCount(int state);
+    int totalCount(Integer state, Integer uid,String keywords);
 }

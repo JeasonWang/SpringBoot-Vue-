@@ -6,7 +6,6 @@ axios.interceptors.request.use(
     if (sessionStorage.getItem('Authorization')) {
       config.headers.Authorization = sessionStorage.getItem('Authorization');
     }
-
     return config;
   },
   error => {
