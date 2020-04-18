@@ -1,17 +1,5 @@
 import axios from 'axios'
 
-
-axios.interceptors.request.use(
-  config => {
-    if (sessionStorage.getItem('Authorization')) {
-      config.headers.Authorization = sessionStorage.getItem('Authorization');
-    }
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  });
-
 let base = '';
 export const postRequest = (url, params) => {
   return axios({

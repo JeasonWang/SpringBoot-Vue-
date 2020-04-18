@@ -7,7 +7,6 @@ import 'font-awesome/css/font-awesome.min.css'
 import './utils/filter_utils.js'
 import store from "./store";
 import axios from 'axios' ;
-Vue.prototype.$axios= axios ;
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
