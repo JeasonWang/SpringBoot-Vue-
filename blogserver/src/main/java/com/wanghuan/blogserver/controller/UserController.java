@@ -2,6 +2,7 @@ package com.wanghuan.blogserver.controller;
 
 import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
+import com.wanghuan.blogserver.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +13,15 @@ public class UserController {
     UserService userService;
     @GetMapping("/currentUserName")
     public String getCurrentUser(){
-        return userService.queryById(7).getNickname();
+        return Util.getCurrentUser().getNickname();
     }
     @GetMapping("/currentUserEmail")
     public String getCurrentUserEmail(){
-        return userService.queryById(7).getEmail();
+        return Util.getCurrentUser().getEmail();
     }
+
     @GetMapping("/isAdmin")
     public boolean isAdmin(){
-        return userService.isAdmin(7)>0;
+        return userService.isAdmin(Util.getCurrentUser().getId())>0;
     }
 }

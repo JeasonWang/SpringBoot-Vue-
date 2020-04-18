@@ -1,6 +1,7 @@
 package com.wanghuan.blogserver.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.wanghuan.blogserver.util.TokenUtil;
+import com.wanghuan.blogserver.util.Util;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -33,6 +34,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             json.put("code","50000");
             response.getWriter().append(json.toJSONString());
             System.out.println("认证失败，未通过拦截器");
+            Util.setCurrentUser(null);
         }catch (Exception e){
             e.printStackTrace();
             response.sendError(500);

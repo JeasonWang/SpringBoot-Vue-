@@ -20,8 +20,8 @@ public class ArticleController {
     ArticleService articleService;
     @GetMapping("/all")
     public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count,String keywords) {
-        int totalCount = articleService.totalCount(state, Util.getCurrentUser().getId(),keywords);
-        List<Article> articles = articleService.queryAllByStateAndKeywords(state, page, count,keywords);
+        int totalCount = articleService.getArticleCountByState(state, Util.getCurrentUser().getId(),keywords);
+        List<Article> articles = articleService.getArticleByState(state, page, count,keywords);
         Map<String, Object> map = new HashMap<>();
         map.put("totalCount", totalCount);
         map.put("articles", articles);

@@ -5,15 +5,35 @@
     <resultMap type="com.wanghuan.blogserver.entity.Article" id="ArticleMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="mdcontent" column="mdContent" jdbcType="VARCHAR"/>
-        <result property="htmlcontent" column="htmlContent" jdbcType="VARCHAR"/>
+        <result property="mdContent" column="mdContent" jdbcType="VARCHAR"/>
+        <result property="htmlContent" column="htmlContent" jdbcType="VARCHAR"/>
         <result property="summary" column="summary" jdbcType="VARCHAR"/>
         <result property="cid" column="cid" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
-        <result property="publishdate" column="publishDate" jdbcType="TIMESTAMP"/>
-        <result property="edittime" column="editTime" jdbcType="TIMESTAMP"/>
+        <result property="publishDate" column="publishDate" jdbcType="TIMESTAMP"/>
+        <result property="editTime" column="editTime" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
-        <result property="pageview" column="pageView" jdbcType="INTEGER"/>
+        <result property="pageView" column="pageView" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.wanghuan.blogserver.entity.Article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="cid" property="cid"/>
+        <result column="uid" property="uid"/>
+        <result column="publishDate" property="publishDate"/>
+        <result column="editTime" property="editTime"/>
+        <result column="state" property="state"/>
+        <result column="pageView" property="pageView"/>
+        <result column="mdContent" property="mdContent"/>
+        <result column="htmlContent" property="htmlContent"/>
+        <result column="summary" property="summary"/>
+        <result column="nickname" property="nickname"/>
+        <result column="cateName" property="cateName"/>
+        <collection property="tags" ofType="com.wanghuan.blogserver.entity.Tags" column="tagName">
+            <id property="id" column="tid"/>
+            <result property="tagName" column="tagName"/>
+        </collection>
     </resultMap>
 
     <!--查询单个-->
@@ -22,6 +42,9 @@
           id, title, mdContent, htmlContent, summary, cid, uid, publishDate, editTime, state, pageView
         from vueblog.article
         where id = #{id}
+    </select>
+    <select id="getArticleById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT a.*,t.`tagName`,t.`id` AS tid,u.`nickname`,c.`cateName` FROM article a LEFT JOIN article_tags ats ON a.`id`=ats.`aid` LEFT JOIN tags t ON ats.`tid`=t.`id` LEFT JOIN user u ON a.`uid`=u.`id` LEFT JOIN category c ON a.`cid`=c.`id` WHERE a.id=#{aid}
     </select>
 
     <!--查询指定行数据-->
@@ -75,9 +98,8 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into vueblog.article(title, mdContent, htmlContent, summary, cid, uid, publishDate, editTime, state, pageView)
-        values (#{title}, #{mdcontent}, #{htmlcontent}, #{summary}, #{cid}, #{uid}, #{publishdate}, #{edittime}, #{state}, #{pageview})
+    <insert id="addNewArticle" parameterType="com.wanghuan.blogserver.entity.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article SET title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},uid=#{uid},publishDate=#{publishDate},state=#{state},editTime=#{editTime}
     </insert>
 
     <!--通过主键修改数据-->
@@ -123,28 +145,32 @@
         delete from vueblog.article where id = #{id}
     </delete>
 
-    <select id="queryAllByStateAndKeywords" resultMap="ArticleMap">
-        select
-          id, title, mdContent, htmlContent, summary, cid, uid, publishDate, editTime, state, pageView
-        from vueblog.article
-        <where>
-            <if test="state != -2">
-                and uid = #{uid}
-            </if>
-            <if test="state != -1 and state !=-2">
-                and state = #{state}
-            </if>
-            <if test="state = -2">
-                and state = 1
-            </if>
-            <if test="keywords!=null">
-                AND title LIKE concat('%',#{keywords},'%')
-            </if>
-            ORDER BY editTime DESC limit #{offset},#{limit};
-        </where>
+    <select id="getArticleByState" resultType="com.wanghuan.blogserver.entity.Article">
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`nickname`,c.`cateName`,a.uid FROM article a,user
+        u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id`
+        <if test="state!=-2">
+            and a.uid=#{uid}
+        </if>
+        <if test="state!=-1 and state!=-2">
+            and a.state=#{state}
+        </if>
+        <if test="state==-2">
+            and a.state=1
+        </if>
+        <if test="keywords!=null">
+            AND title LIKE concat('%',#{keywords},'%')
+        </if>
+        ORDER BY a.editTime DESC limit #{offset},#{limit};
     </select>
-
-    <select id="totalCount" resultType="int">
+    <select id="getArticleByStateByAdmin" resultType="com.wanghuan.blogserver.entity.Article">
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`nickname`,c.`cateName`,a.uid FROM article a,user
+        u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id` and a.state=1
+        <if test="keywords!=null">
+            AND title LIKE concat('%',#{keywords},'%')
+        </if>
+        ORDER BY a.editTime DESC limit #{offset},#{limit};
+    </select>
+    <select id="getArticleCountByState" resultType="int">
         SELECT count(*) FROM article
         <where>
             <if test="state!=-1">

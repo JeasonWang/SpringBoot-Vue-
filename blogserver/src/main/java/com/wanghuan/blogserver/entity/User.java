@@ -1,5 +1,7 @@
 package com.wanghuan.blogserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -17,7 +19,8 @@ public class User implements Serializable {
     private String username;
     
     private String nickname;
-    
+
+    @JsonIgnore
     private String password;
     
     private Integer enabled;

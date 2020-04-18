@@ -1,6 +1,7 @@
 package com.wanghuan.blogserver.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,36 +12,35 @@ import java.util.Date;
  */
 public class Category implements Serializable {
     private static final long serialVersionUID = -63068744572613211L;
-    
-    private Integer id;
-    
-    private String catename;
-    
-    private Date date;
 
+    private Long id;
+    private String cateName;
+    private Timestamp date;
 
-    public Integer getId() {
-        return id;
+    public Category() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCatename() {
-        return catename;
-    }
-
-    public void setCatename(String catename) {
-        this.catename = catename;
-    }
-
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
+    }
 }

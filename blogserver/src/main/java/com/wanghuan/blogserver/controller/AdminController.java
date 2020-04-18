@@ -21,8 +21,8 @@ public class AdminController {
     @GetMapping("/all")
     public Map<String,Object> all(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "6") Integer count, String keywords){
         System.out.println("admin all");
-        List<Article> articles = articleService.queryAllByStateAndKeywords(-2, page, count, keywords);
-        int totalCount = articleService.totalCount(1, null,keywords);
+        List<Article> articles = articleService.getArticleByState(-2, page, count, keywords);
+        int totalCount = articleService.getArticleCountByState(1, null,keywords);
         Map<String,Object> map = new HashMap();
         map.put("totalCount",totalCount);
         map.put("articles",articles);

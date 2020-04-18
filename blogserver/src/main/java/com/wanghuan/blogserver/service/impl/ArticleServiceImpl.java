@@ -44,15 +44,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> queryAllByStateAndKeywords(int state, int page, int count, String keywords) {
+    public List<Article> getArticleByState(int state, int page, int count, String keywords) {
         int offset = (page - 1)*count;
         int limit = count;
         int uid = 7;
-        return articleDao.queryAllByStateAndKeywords(state,offset,limit,keywords,uid);
+        return articleDao.getArticleByState(state,offset,limit,keywords,uid);
     }
 
     @Override
-    public int totalCount(Integer state, Integer uid,String keywords) {
-        return articleDao.totalCount(state, uid,keywords);
+    public int getArticleCountByState(Integer state, Integer uid,String keywords) {
+        return articleDao.getArticleCountByState(state, uid,keywords);
     }
 }

@@ -62,7 +62,7 @@ public interface ArticleService {
      */
     int deleteById(Integer id);
 
-    List<Article> queryAllByStateAndKeywords(int state, int page, int count, String keywords);
+    List<Article> getArticleByState(int state, int page, int count, String keywords);
 
-    int totalCount(Integer state, Integer uid,String keywords);
+    int getArticleCountByState(Integer state, Integer uid,String keywords);
 }

@@ -8,28 +8,23 @@ import java.io.Serializable;
  * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
-public class Tags implements Serializable {
-    private static final long serialVersionUID = 358399061650552271L;
-    
-    private Integer id;
-    
-    private String tagname;
+public class Tags {
+    private Long id;
+    private String tagName;
 
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTagname() {
-        return tagname;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagname(String tagname) {
-        this.tagname = tagname;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
-
 }

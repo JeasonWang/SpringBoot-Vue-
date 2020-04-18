@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/admin/category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
@@ -19,7 +19,7 @@ public class CategoryController {
     @PostMapping("/")
     public int addCategory(String cateName){
         Category category = new Category();
-        category.setCatename(cateName);
+        category.setCateName(cateName);
         return categoryService.insert(category);
     }
     @DeleteMapping("/{id}")

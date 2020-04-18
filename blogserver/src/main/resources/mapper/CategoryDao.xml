@@ -4,7 +4,7 @@
 
     <resultMap type="com.wanghuan.blogserver.entity.Category" id="CategoryMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="catename" column="cateName" jdbcType="VARCHAR"/>
+        <result property="cateName" column="cateName" jdbcType="VARCHAR"/>
         <result property="date" column="date" jdbcType="OTHER"/>
     </resultMap>
 
@@ -33,8 +33,8 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="catename != null and catename != ''">
-                and cateName = #{catename}
+            <if test="cateName != null and cateName != ''">
+                and cateName = #{cateName}
             </if>
             <if test="date != null">
                 and date = #{date}
@@ -45,15 +45,15 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into vueblog.category(cateName, date)
-        values (#{catename}, #{date})
+        values (#{cateName}, #{date})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update vueblog.category
         <set>
-            <if test="catename != null and catename != ''">
-                cateName = #{catename},
+            <if test="cateName != null and cateName != ''">
+                cateName = #{cateName},
             </if>
             <if test="date != null">
                 date = #{date},

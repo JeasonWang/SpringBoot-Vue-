@@ -28,6 +28,7 @@ public class LoginController {
             String token= TokenUtil.sign(user1);
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("token",token);
+            hs.put("user",user1);
             ObjectMapper objectMapper=new ObjectMapper();
             return objectMapper.writeValueAsString(hs);
         }
