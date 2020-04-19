@@ -24,24 +24,6 @@ public interface ArticleDao {
     Article queryById(Integer id);
 
     /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<Article> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
-
-    /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param article 实例对象
-     * @return 对象列表
-     */
-    List<Article> queryAll(Article article);
-
-    /**
      * 新增数据
      *
      * @param article 实例对象
@@ -50,22 +32,22 @@ public interface ArticleDao {
     int insert(Article article);
 
     /**
-     * 修改数据
-     *
-     * @param article 实例对象
-     * @return 影响行数
-     */
-    int update(Article article);
-
-    /**
      * 通过主键删除数据
      *
-     * @param id 主键
+     * @param aids 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(@Param("aids") Integer[] aids);
 
     List<Article> getArticleByState(@Param("state") int state, @Param("offset") int offset,@Param("limit") int limit, @Param("keywords") String keywords,@Param("uid")int uid);
 
     int getArticleCountByState(@Param("state") Integer state, @Param("uid") Integer uid, @Param("keywords") String keywords);
+
+    int updateArticleState(@Param("aids") Integer[] aids, @Param("state") Integer state);
+
+    int updateArticleStateById(@Param("aid") Integer aid, @Param("state") Integer state);
+
+    int addArticle(Article article);
+
+    int updateArticle(Article article);
 }

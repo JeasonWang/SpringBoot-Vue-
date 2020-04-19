@@ -13,17 +13,18 @@ import java.util.List;
  */
 
 public class Article {
-    private Long id;
+    private Integer id;
     private String title;
     private String mdContent;
     private String htmlContent;
     private String summary;
-    private Long cid;
-    private Long uid;
+    private Integer cid;
+    private Integer uid;
     private Timestamp publishDate;
     private Integer state;
     private Integer pageView;
     private Timestamp editTime;
+
     private String[] dynamicTags;
     private String nickname;
     private String cateName;
@@ -78,11 +79,11 @@ public class Article {
         this.editTime = editTime;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -118,19 +119,19 @@ public class Article {
         this.summary = summary;
     }
 
-    public Long getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(Long cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
