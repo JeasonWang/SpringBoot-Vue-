@@ -65,6 +65,7 @@
       var from = this.$route.query.from;
       this.from = from;
       var _this = this;
+      console.log("from:"+from);
       if (from != null && from != '' && from != undefined) {
         var id = this.$route.query.id;
         this.id = id;

@@ -29,7 +29,6 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     let token = sessionStorage.getItem('Authorization');
-    console.log("beforeeach:"+token);
     if (token === 'null' || token === '') {
       next('/?redirect=/login');
     } else {
