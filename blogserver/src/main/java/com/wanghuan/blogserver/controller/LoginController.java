@@ -1,7 +1,8 @@
 package com.wanghuan.blogserver.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wanghuan.blogserver.annotation.PassToken;
 import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
 import com.wanghuan.blogserver.util.TokenUtil;
@@ -11,30 +12,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-
 @RestController
 public class LoginController {
     @Autowired
     UserService userService;
+
+    @PassToken
     @PostMapping("/login")
     public String login(String username, String password) throws JsonProcessingException {
-        User user1 = userService.queryByUsnAndPsd(username,password);
-        if (user1 != null){
-            Util.setCurrentUser(user1);
-            String token= TokenUtil.sign(user1);
-            HashMap<String,Object> hs=new HashMap<>();
-            hs.put("token",token);
-            hs.put("user",user1);
-            ObjectMapper objectMapper=new ObjectMapper();
-            return objectMapper.writeValueAsString(hs);
+        JSONObject jsonObject=new JSONObject();
+        User uu = userService.queryById(7);
+        User userForBase=userService.queryByUsnAndPsd(username,password);
+        if(userForBase==null){
+            jsonObject.put("message","登录失败,用户不存在");
+        }else {
+            Util.setCurrentUser(userForBase);
+            String token = TokenUtil.getToken(userForBase);
+            jsonObject.put("token", token);
+            jsonObject.put("user", userForBase);
         }
-        return "";
+        return jsonObject.toJSONString();
     }
 
+    @PassToken
     @GetMapping("/logout")
     public void logout(){
 
