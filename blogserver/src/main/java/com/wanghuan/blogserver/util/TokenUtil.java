@@ -8,12 +8,13 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-
+@Slf4j
 @Component
 public class TokenUtil {
     private static final long EXPIRE_TIME= 60*60*1000; //有效期60min
@@ -74,8 +75,11 @@ public class TokenUtil {
         if (!redisUtil.hasKey(username)){
             return false;
         }
-        if(redisUtil.getExpire(username) <= 0)
+        if(redisUtil.getExpire(username) <= 0){
+            log.error("token过期");
             return false;
+        }
+
         if (!token.equals(redisUtil.get(username)))
             return false;
         return true;
