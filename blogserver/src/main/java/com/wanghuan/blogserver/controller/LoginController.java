@@ -41,6 +41,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public void logout(){
-
+        User user = Util.getCurrentUser();
+        redisUtil.del(user.getUsername());
+        Util.setCurrentUser(null);
     }
 }
