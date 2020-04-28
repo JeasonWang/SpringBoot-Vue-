@@ -12,13 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@UserLoginToken
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
     @Autowired
     ArticleService articleService;
 
-    @UserLoginToken
+
     @GetMapping("/all")
     public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count,String keywords) {
         int totalCount = articleService.getArticleCountByState(state, Util.getCurrentUser().getId(),keywords);
@@ -29,7 +30,7 @@ public class ArticleController {
         return map;
     }
 
-    @UserLoginToken
+
     @PostMapping("/")
     public RespBean addArticle(Article article){
         if(articleService.addArticle(article) == 1){
@@ -38,7 +39,7 @@ public class ArticleController {
         return new RespBean("error",article.getState() == 0?"文章保存失败":"文章发表失败");
     }
 
-    @UserLoginToken
+
     @GetMapping("/{aid}")
     public Article getArticleById(@PathVariable Integer aid){
         return articleService.queryById(aid);
@@ -51,7 +52,7 @@ public class ArticleController {
         return new RespBean("error","删除失败");
     }
 
-    @UserLoginToken
+
     @PutMapping("/restore")
     public RespBean restoreArticle(Integer articleId) {
         if (articleService.updateArticleStateById(articleId, 1) == 1)

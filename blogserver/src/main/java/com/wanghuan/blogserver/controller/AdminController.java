@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@UserLoginToken
 @RestController
 @RequestMapping("/admin/article")
 public class AdminController {
     @Autowired
     ArticleService articleService;
 
-    @UserLoginToken
     @GetMapping("/all")
     public Map<String,Object> all(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "6") Integer count, String keywords){
         System.out.println("admin all");

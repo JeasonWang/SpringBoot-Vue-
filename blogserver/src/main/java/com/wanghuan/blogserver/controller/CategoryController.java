@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@UserLoginToken
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @UserLoginToken
+
     @GetMapping("/all")
     public List<Category> allCategory(){
         return categoryService.queryAll(null);
     }
 
-    @UserLoginToken
+
     @PostMapping("/")
     public int addCategory(String cateName){
         Category category = new Category();
@@ -29,13 +29,13 @@ public class CategoryController {
         return categoryService.insert(category);
     }
 
-    @UserLoginToken
+
     @DeleteMapping("/{id}")
     public int deleteCategory(@PathVariable Integer id){
         return categoryService.deleteById(id);
     }
 
-    @UserLoginToken
+
     @PutMapping("/")
     public int updateCategory(@RequestBody Category category){
         return categoryService.update(category);

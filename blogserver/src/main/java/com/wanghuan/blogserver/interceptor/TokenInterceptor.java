@@ -9,20 +9,29 @@ import com.wanghuan.blogserver.annotation.PassToken;
 import com.wanghuan.blogserver.annotation.UserLoginToken;
 import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
+import com.wanghuan.blogserver.util.RedisUtil;
+import com.wanghuan.blogserver.util.TokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+@Slf4j
 public class TokenInterceptor implements HandlerInterceptor {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TokenUtil tokenUtil;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler)throws Exception{
+        log.info("进入拦截器:" + request.getRequestURI());
         if(request.getMethod().equals("OPTIONS")){
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
@@ -32,49 +41,32 @@ public class TokenInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization");
-        HandlerMethod handlerMethod=(HandlerMethod)handler;
-        Method method=handlerMethod.getMethod();
+        HandlerMethod handlerMethod = (HandlerMethod)handler;
+        Annotation annoAuth = handlerMethod.getBean().getClass().getAnnotation(UserLoginToken.class);
+        Annotation annoPass = handlerMethod.getMethodAnnotation(PassToken.class);
 
         //检查是否有passtoken注释，有则跳过认证
-        if (method.isAnnotationPresent(PassToken.class)) {
-            PassToken passToken = method.getAnnotation(PassToken.class);
-            if (passToken.required()) {
+        if (annoPass != null){
+            PassToken passToken = handlerMethod.getMethodAnnotation(PassToken.class);
+            if (passToken.required()){
                 return true;
             }
         }
-
         //检查有没有需要用户权限的注解
-        if (method.isAnnotationPresent(UserLoginToken.class)) {
-            UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
+        if (annoAuth == null) {
+            return true;
+        }
+        if (annoAuth != null) {
+            UserLoginToken userLoginToken = handlerMethod.getBean().getClass().getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
                 // 执行认证
                 if (token == null || token.length() == 0) {
                     throw new RuntimeException("无token，请重新登录");
                 }
-                // 获取 token 中的 user id
-                String userId;
-                try {
-                    userId = JWT.decode(token).getAudience().get(0);
-                } catch (JWTDecodeException j) {
-                    throw new RuntimeException("401");
-                }
-                User tokenuser = userService.queryById(Integer.parseInt(userId));
-                if (tokenuser == null) {
-                    throw new RuntimeException("用户不存在，请重新登录");
-                }
-                // 验证 token
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(tokenuser.getPassword())).build();
-                try {
-                    DecodedJWT jwt = jwtVerifier.verify(token);
-                    System.out.println("认证通过：");
-                    System.out.println("username: " + tokenuser.getNickname());
-                    System.out.println("过期时间：      " + jwt.getExpiresAt());
-                } catch (JWTVerificationException e) {
-                    throw new RuntimeException("401");
-                }
-                return true;
+                return tokenUtil.checkToken(token);
             }
         }
         return true;
     }
+
 }

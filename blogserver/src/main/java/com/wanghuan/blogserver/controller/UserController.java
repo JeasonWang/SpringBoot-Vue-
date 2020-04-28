@@ -13,19 +13,19 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @UserLoginToken
+
     @GetMapping("/currentUserName")
     public String getCurrentUser(){
         return Util.getCurrentUser().getNickname();
     }
 
-    @UserLoginToken
+
     @GetMapping("/currentUserEmail")
     public String getCurrentUserEmail(){
         return Util.getCurrentUser().getEmail();
     }
 
-    @UserLoginToken
+
     @GetMapping("/isAdmin")
     public boolean isAdmin(){
         return userService.isAdmin(Util.getCurrentUser().getId())>0;
