@@ -13,7 +13,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
     @GetMapping("/currentUserName")
     public String getCurrentUser(){
         return Util.getCurrentUser().getNickname();
