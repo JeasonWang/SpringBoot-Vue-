@@ -2,12 +2,16 @@ package com.wanghuan.blogserver.controller;
 
 import com.wanghuan.blogserver.annotation.UserLoginToken;
 import com.wanghuan.blogserver.entity.RespBean;
+import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
 import com.wanghuan.blogserver.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @UserLoginToken
 @RestController
@@ -38,5 +42,9 @@ public class UserController {
             return new RespBean("success", "开启成功!");
         }
         return new RespBean("error", "开启失败!");
+    }
+    @GetMapping("/currentUser")
+    public User getUser(){
+        return Util.getCurrentUser();
     }
 }

@@ -61,7 +61,7 @@
     </delete>
 
     <delete id="deleteTagsByAid">
-        delete from article_tags where aid={aid}
+        delete from article_tags where aid = #{aid}
     </delete>
 
     <insert id="saveTags">
@@ -73,7 +73,7 @@
 
     <select id="getTagsIdByTagName" resultType="int">
         SELECT id FROM tags WHERE tagName IN
-        <foreach collection="tagNames" item="tagName" separator="," open="(" close=")">
+        <foreach collection="dynamicTags" item="tagName" separator="," open="(" close=")">
             #{tagName}
         </foreach>
     </select>

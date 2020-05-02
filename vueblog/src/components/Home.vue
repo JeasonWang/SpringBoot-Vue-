@@ -73,6 +73,12 @@
           }, function () {
             //取消
           })
+        };
+        if(command == 'MyArticle'){
+            _this.$router.replace({path: '/articleList'});
+        };
+        if(command == 'MyHome'){
+            _this.$router.replace({path: '/home'})
         }
       }
     },

@@ -1,5 +1,6 @@
 package com.wanghuan.blogserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
@@ -29,7 +30,8 @@ public class User implements Serializable {
     private String email;
     
     private String userface;
-    
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date regTime;
 
     private List<Role> roles;
