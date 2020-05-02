@@ -62,4 +62,11 @@ public interface TagsDao {
      */
     int deleteById(Integer id);
 
+    int deleteTagsByAid(Integer aid);
+
+    int saveTags(@Param("tags") String[] tags);
+
+    List<Integer> getTagsIdByTagName(String[] dynamicTags);
+
+    int saveTags2ArticleTags(List<Integer> tIds, Integer aid);
 }

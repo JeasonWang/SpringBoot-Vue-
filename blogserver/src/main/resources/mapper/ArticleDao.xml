@@ -33,14 +33,15 @@
     </insert>
 
     <update id="updateArticle" parameterType="com.wanghuan.blogserver.entity.Article">
-        update article set title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime}
-        <if test="state == 1">
+        UPDATE article SET
+        title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime}
+        <if test="state==1">
             ,state=1
         </if>
-        <if test="publishDate != null">
-            publishDate=#{publishDate}
+        <if test="publishDate!=null">
+            ,publishDate=#{publishDate}
         </if>
-        where id = #{id}
+        WHERE id=#{id}
     </update>
 
     <!--通过主键修改数据-->

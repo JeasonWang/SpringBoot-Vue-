@@ -3,12 +3,12 @@ package com.wanghuan.blogserver.entity;
 import java.io.Serializable;
 
 /**
- * (RolesUser)实体类
+ * (RoleUser)实体类
  *
  * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
-public class RolesUser implements Serializable {
+public class RoleUser implements Serializable {
     private static final long serialVersionUID = 410128727017604491L;
     
     private Integer id;

@@ -40,7 +40,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod)){
             return true;
         }
-        String token = request.getHeader("Authorization");
+        //去掉Bearer
+        String BearerToken = request.getHeader("Authorization");
         HandlerMethod handlerMethod = (HandlerMethod)handler;
         Annotation annoAuth = handlerMethod.getBean().getClass().getAnnotation(UserLoginToken.class);
         Annotation annoPass = handlerMethod.getMethodAnnotation(PassToken.class);
@@ -60,10 +61,10 @@ public class TokenInterceptor implements HandlerInterceptor {
             UserLoginToken userLoginToken = handlerMethod.getBean().getClass().getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
                 // 执行认证
-                if (token == null || token.length() == 0) {
+                if (BearerToken == null || BearerToken.length() == 0) {
                     throw new RuntimeException("无token，请重新登录");
                 }
-                return tokenUtil.checkToken(token);
+                return tokenUtil.checkToken(BearerToken);
             }
         }
         return true;

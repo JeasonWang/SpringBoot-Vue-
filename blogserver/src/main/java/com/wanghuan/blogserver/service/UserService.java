@@ -1,5 +1,6 @@
 package com.wanghuan.blogserver.service;
 
+import com.wanghuan.blogserver.entity.Role;
 import com.wanghuan.blogserver.entity.User;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
  * @since 2020-04-12 21:16:24
  */
 public interface UserService {
+
+    List<Role> getAllRoles(Integer uid);
 
     /**
      * 通过ID查询单条数据
@@ -56,4 +59,7 @@ public interface UserService {
 
     int isAdmin(int id);
 
+    List<User> queryNickname(String nickname);
+
+    int updateUserEmail(String email);
 }

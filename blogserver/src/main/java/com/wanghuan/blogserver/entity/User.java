@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (User)实体类
@@ -29,8 +30,21 @@ public class User implements Serializable {
     
     private String userface;
     
-    private Date regtime;
+    private Date regTime;
 
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Integer getId() {
         return id;
@@ -88,12 +102,11 @@ public class User implements Serializable {
         this.userface = userface;
     }
 
-    public Date getRegtime() {
-        return regtime;
+    public Date getRegTime() {
+        return regTime;
     }
 
-    public void setRegtime(Date regtime) {
-        this.regtime = regtime;
+    public void setRegTime(Date regTime) {
+        this.regTime = regTime;
     }
-
 }

@@ -1,15 +1,15 @@
 package com.wanghuan.blogserver.service;
 
-import com.wanghuan.blogserver.entity.RolesUser;
+import com.wanghuan.blogserver.entity.RoleUser;
 import java.util.List;
 
 /**
- * (RolesUser)表服务接口
+ * (RoleUser)表服务接口
  *
  * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
-public interface RolesUserService {
+public interface RoleUserService {
 
     /**
      * 通过ID查询单条数据
@@ -17,7 +17,7 @@ public interface RolesUserService {
      * @param id 主键
      * @return 实例对象
      */
-    RolesUser queryById(Integer id);
+    RoleUser queryById(Integer id);
 
     /**
      * 查询多条数据
@@ -26,23 +26,23 @@ public interface RolesUserService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<RolesUser> queryAllByLimit(int offset, int limit);
+    List<RoleUser> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param rolesUser 实例对象
+     * @param roleUser 实例对象
      * @return 实例对象
      */
-    RolesUser insert(RolesUser rolesUser);
+    RoleUser insert(RoleUser roleUser);
 
     /**
      * 修改数据
      *
-     * @param rolesUser 实例对象
+     * @param roleUser 实例对象
      * @return 实例对象
      */
-    RolesUser update(RolesUser rolesUser);
+    RoleUser update(RoleUser roleUser);
 
     /**
      * 通过主键删除数据

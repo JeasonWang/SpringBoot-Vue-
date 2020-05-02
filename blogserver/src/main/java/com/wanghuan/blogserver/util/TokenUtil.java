@@ -43,7 +43,7 @@ public class TokenUtil {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return token;
+        return "Bearer "+token;
     }
 
     public User getTokenUser(String token){
@@ -60,35 +60,33 @@ public class TokenUtil {
         return tokenUser;
     }
 
-    public boolean checkToken(String token) throws UnsupportedEncodingException {
-        if (token == null || token.length() == 0)
+    public boolean checkToken(String BearerToken) throws UnsupportedEncodingException {
+        if (BearerToken == null || BearerToken.length() == 0)
             return false;
         String userName;
         try {
-            userName = JWT.decode(token).getSubject();
+            userName = JWT.decode(BearerToken.substring(7)).getSubject();
         } catch (JWTDecodeException j) {
             throw new RuntimeException("401");
         }
         if (userName == null) {
             throw new RuntimeException("用户不存在，请重新登录");
         }
-        if(!checkRedisToken(userName,token)){
+        if(!checkRedisToken(userName,BearerToken)){
             return false;
         }
         // 验证 token
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(tokenConfig.getSecret())).build();
         try {
-            DecodedJWT jwt = jwtVerifier.verify(token);
-            System.out.println("认证通过：");
-            System.out.println("username: " + userName);
-            System.out.println("过期时间：" + jwt.getExpiresAt());
+            DecodedJWT jwt = jwtVerifier.verify(BearerToken.substring(7));
+            log.info(userName+"认证通过，过期时间：" + jwt.getExpiresAt());
         } catch (JWTVerificationException e) {
             throw new RuntimeException("401");
         }
-        Util.setCurrentUser(this.getTokenUser(token));
+        Util.setCurrentUser(this.getTokenUser(BearerToken.substring(7)));
         return true;
     }
-    public boolean checkRedisToken(String username,String token){
+    public boolean checkRedisToken(String username,String BearerToken){
         if (!redisUtil.hasKey(username)){
             return false;
         }
@@ -96,8 +94,7 @@ public class TokenUtil {
             log.error("token过期");
             return false;
         }
-
-        if (!token.equals(redisUtil.get(username)))
+        if (!BearerToken.equals(redisUtil.get(username)))
             return false;
         return true;
     }

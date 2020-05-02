@@ -45,7 +45,7 @@
           if (resp.status == 200 && resp.data.token !="") {
             //成功
             _this.userToken = resp.data.token;
-            _this.$store.commit('changeLogin',{ Authorization:_this.userToken })
+            _this.$store.commit('changeLogin',{ Authorization:this.userToken });
             _this.$router.replace({path: '/home'});
           } else {
             //失败

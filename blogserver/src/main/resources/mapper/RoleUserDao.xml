@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wanghuan.blogserver.dao.RolesUserDao">
+<mapper namespace="com.wanghuan.blogserver.dao.RoleUserDao">
 
-    <resultMap type="com.wanghuan.blogserver.entity.RolesUser" id="RolesUserMap">
+    <resultMap type="com.wanghuan.blogserver.entity.RoleUser" id="RoleUserMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="rid" column="rid" jdbcType="INTEGER"/>
         <result property="uid" column="uid" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="RolesUserMap">
+    <select id="queryById" resultMap="RoleUserMap">
         select
           id, rid, uid
-        from vueblog.roles_user
+        from vueblog.role_user
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="RolesUserMap">
+    <select id="queryAllByLimit" resultMap="RoleUserMap">
         select
           id, rid, uid
-        from vueblog.roles_user
+        from vueblog.role_user
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="RolesUserMap">
+    <select id="queryAll" resultMap="RoleUserMap">
         select
           id, rid, uid
-        from vueblog.roles_user
+        from vueblog.role_user
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -44,13 +44,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into vueblog.roles_user(rid, uid)
+        insert into vueblog.role_user(rid, uid)
         values (#{rid}, #{uid})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update vueblog.roles_user
+        update vueblog.role_user
         <set>
             <if test="rid != null">
                 rid = #{rid},
@@ -64,7 +64,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from vueblog.roles_user where id = #{id}
+        delete from vueblog.role_user where id = #{id}
     </delete>
 
 </mapper>

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource(value = {"classpath:tokenconfig.properties"})
+@PropertySource(value = {"classpath:tokenConfig.properties"})
 public class TokenConfig {
     @Value("${token.expiration}")
     private Long expiration;

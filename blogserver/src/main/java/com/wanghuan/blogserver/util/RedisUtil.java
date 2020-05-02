@@ -1,13 +1,9 @@
 package com.wanghuan.blogserver.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wanghuan.blogserver.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -19,10 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
     @Autowired
     RedisTemplate redisTemplate;
-
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
-
     @Autowired
     ObjectMapper omJson;
 
@@ -109,6 +101,4 @@ public class RedisUtil {
         }
         return redisTemplate.opsForValue().decrement(key,delta);
     }
-
-
 }

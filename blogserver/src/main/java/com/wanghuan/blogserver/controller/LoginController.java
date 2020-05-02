@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 public class LoginController {
     @Autowired
@@ -33,9 +31,9 @@ public class LoginController {
             jsonObject.put("message","登录失败,用户不存在");
         }else {
             String token = tokenUtil.getToken(userForBase);
-            redisUtil.set(username,token,60*60);
             jsonObject.put("token", token);
             jsonObject.put("user", userForBase);
+            redisUtil.set(username,token,60*60);
         }
         return jsonObject.toJSONString();
     }

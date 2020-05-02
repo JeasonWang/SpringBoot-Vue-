@@ -1,5 +1,6 @@
 package com.wanghuan.blogserver.dao;
 
+import com.wanghuan.blogserver.entity.Role;
 import com.wanghuan.blogserver.entity.User;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -65,4 +66,10 @@ public interface UserDao {
     int deleteById(Integer id);
 
     int isAdmin(@Param("id") int id);
+
+    List<User> queryNickname(@Param("nickname") String nickname);
+
+    List<Role> getAllRoles(Integer uid);
+
+    int updateUserEmail(@Param("email") String email);
 }

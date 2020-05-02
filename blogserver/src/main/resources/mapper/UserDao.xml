@@ -10,37 +10,53 @@
         <result property="enabled" column="enabled" jdbcType="INTEGER"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="userface" column="userface" jdbcType="VARCHAR"/>
-        <result property="regtime" column="regTime" jdbcType="TIMESTAMP"/>
+        <result property="regTime" column="regTime" jdbcType="TIMESTAMP"/>
+        <collection property="roles" ofType="com.wanghuan.blogserver.entity.Role">
+            <id property="id" column="rid"/>
+            <result property="name" column="rname"/>
+        </collection>
     </resultMap>
 
-    <select id="queryByUsnAndPsd" resultMap="UserMap">
+    <select id="queryByUsnAndPsd" resultType="com.wanghuan.blogserver.entity.User">
         select
-          id, username, nickname, password, enabled, email, userface, regTime
+          *
         from vueblog.user
         where username = #{username}
         and password = #{password}
     </select>
+    <select id="getAllRoles" resultType="com.wanghuan.blogserver.entity.Role">
+        select * from role;
+    </select>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="UserMap">
+    <select id="queryById" resultType="com.wanghuan.blogserver.entity.User">
         select
-          id, username, nickname, password, enabled, email, userface, regTime
+          *
         from vueblog.user
         where id = #{id}
     </select>
 
+    <update id="updateUserEnabled">
+        UPDATE user set enabled=#{enabled} WHERE id=#{uid}
+    </update>
+
+    <select id="getUserById" resultMap="UserMap">
+        SELECT u.*,r.`id` AS rid,r.`name` AS rname FROM user u,roles r,roles_user ru WHERE u.`id`=ru.`uid` AND
+        r.`id`=ru.`rid` AND u.`id`=#{id}
+    </select>
+
     <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="UserMap">
+    <select id="queryAllByLimit" resultType="com.wanghuan.blogserver.entity.User">
         select
-          id, username, nickname, password, enabled, email, userface, regTime
+          *
         from vueblog.user
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="UserMap">
+    <select id="queryAll" resultType="com.wanghuan.blogserver.entity.User">
         select
-          id, username, nickname, password, enabled, email, userface, regTime
+          *
         from vueblog.user
         <where>
             <if test="id != null">
@@ -64,8 +80,8 @@
             <if test="userface != null and userface != ''">
                 and userface = #{userface}
             </if>
-            <if test="regtime != null">
-                and regTime = #{regtime}
+            <if test="regTime != null">
+                and regTime = #{regTime}
             </if>
         </where>
     </select>
@@ -73,8 +89,20 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into vueblog.user(username, nickname, password, enabled, email, userface, regTime)
-        values (#{username}, #{nickname}, #{password}, #{enabled}, #{email}, #{userface}, #{regtime})
+        values (#{username}, #{nickname}, #{password}, #{enabled}, #{email}, #{userface}, #{regTime})
     </insert>
+    <insert id="setUserRoles">
+        INSERT INTO roles_user(rid,uid) VALUES
+        <foreach collection="rids" separator="," item="rid">
+            (#{rid},#{id})
+        </foreach>
+    </insert>
+    <insert id="reg" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user set username=#{username},password=#{password},nickname=#{nickname}
+    </insert>
+    <update id="updateUserEmail">
+        UPDATE user set email=#{email} WHERE id=#{id}
+    </update>
 
     <!--通过主键修改数据-->
     <update id="update">
@@ -98,8 +126,8 @@
             <if test="userface != null and userface != ''">
                 userface = #{userface},
             </if>
-            <if test="regtime != null">
-                regTime = #{regtime},
+            <if test="regTime != null">
+                regTime = #{regTime},
             </if>
         </set>
         where id = #{id}
@@ -111,7 +139,21 @@
     </delete>
 
     <select id="isAdmin" resultType="int">
-        select count(1) from user u,roles_user ru
+        select count(1) from user u,role_user ru
         where u.id=ru.uid and ru.rid=1 and u.id=#{id}
+    </select>
+
+
+    <select id="queryNickname" resultMap="UserMap">
+        SELECT u.*,r.`id` AS rid,r.`name` AS rname FROM user u,role r,role_user ru WHERE u.`id`=ru.`uid` AND
+        r.`id`=ru.`rid` AND u.`id` NOT IN(SELECT u.`id` FROM user u,role_user ru WHERE u.`id`=ru.`uid` AND ru.`rid`=1)
+        <choose>
+            <when test="nickname!=null and nickname!=''">
+                and u.nickname like concat('%',#{nickname},'%') ORDER BY u.`id`
+            </when>
+            <otherwise>
+                ORDER BY u.`id` limit 20
+            </otherwise>
+        </choose>
     </select>
 </mapper>

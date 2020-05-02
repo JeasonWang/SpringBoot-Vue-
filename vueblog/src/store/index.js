@@ -8,9 +8,9 @@ const store = new Vuex.Store({
   },
   mutations: {
     // 修改token，并将token存入sessionStorage
-    changeLogin (state, user) {
-      state.Authorization = user.Authorization;
-      sessionStorage.setItem('Authorization', user.Authorization);
+    changeLogin (state, token) {
+      state.Authorization = token.Authorization;
+      sessionStorage.setItem('Authorization', token.Authorization);
     }
   }
 });

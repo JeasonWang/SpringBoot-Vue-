@@ -1,16 +1,16 @@
 package com.wanghuan.blogserver.dao;
 
-import com.wanghuan.blogserver.entity.Roles;
+import com.wanghuan.blogserver.entity.RoleUser;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * (Roles)表数据库访问层
+ * (RoleUser)表数据库访问层
  *
  * @author wanghuan
  * @since 2020-04-12 21:16:24
  */
-public interface RolesDao {
+public interface RoleUserDao {
 
     /**
      * 通过ID查询单条数据
@@ -18,7 +18,7 @@ public interface RolesDao {
      * @param id 主键
      * @return 实例对象
      */
-    Roles queryById(Integer id);
+    RoleUser queryById(Integer id);
 
     /**
      * 查询指定行数据
@@ -27,32 +27,32 @@ public interface RolesDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Roles> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<RoleUser> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param roles 实例对象
+     * @param roleUser 实例对象
      * @return 对象列表
      */
-    List<Roles> queryAll(Roles roles);
+    List<RoleUser> queryAll(RoleUser roleUser);
 
     /**
      * 新增数据
      *
-     * @param roles 实例对象
+     * @param roleUser 实例对象
      * @return 影响行数
      */
-    int insert(Roles roles);
+    int insert(RoleUser roleUser);
 
     /**
      * 修改数据
      *
-     * @param roles 实例对象
+     * @param roleUser 实例对象
      * @return 影响行数
      */
-    int update(Roles roles);
+    int update(RoleUser roleUser);
 
     /**
      * 通过主键删除数据
