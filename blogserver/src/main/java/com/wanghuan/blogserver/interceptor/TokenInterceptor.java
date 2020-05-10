@@ -1,15 +1,8 @@
 package com.wanghuan.blogserver.interceptor;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+
 import com.wanghuan.blogserver.annotation.PassToken;
 import com.wanghuan.blogserver.annotation.UserLoginToken;
-import com.wanghuan.blogserver.entity.User;
 import com.wanghuan.blogserver.service.UserService;
-import com.wanghuan.blogserver.util.RedisUtil;
 import com.wanghuan.blogserver.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +12,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 @Slf4j
 public class TokenInterceptor implements HandlerInterceptor {
