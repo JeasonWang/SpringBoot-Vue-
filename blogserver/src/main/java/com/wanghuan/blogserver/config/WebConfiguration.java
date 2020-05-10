@@ -42,12 +42,12 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/static/**");  //静态资源
         excludePath.add("/assets/**");  //静态资源
 
-        registry.addInterceptor(authenticationInterceptor())
+        registry.addInterceptor(tokenInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePath);
     }
     @Bean
-    public TokenInterceptor authenticationInterceptor() {
+    public TokenInterceptor tokenInterceptor() {
         return new TokenInterceptor();
     }
 }
